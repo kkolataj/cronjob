@@ -56,36 +56,23 @@ class DemoCron extends Command
 
                 $res = $client->request('GET', $url);
 
+                $basic  = new \Vonage\Client\Credentials\Basic($vonage_user_id, $vonage_usser_secret_key);
+                $client = new \Vonage\Client($basic);
+
                 if ($res->getStatusCode() == 200) {
                     $content = $res->getBody()->getContents();
                     $array = json_decode($content, true);
                     $rates = $array['rates'][0]['ask'];
 
-                    if ($rates > 1) {
+                    if ($rates > 5) {
                         \Log::info('More than 1');
                     }
-                    if ($rates < 1) {
+                    if ($rates < 4.80) {
                         \Log::info('Less than 1');
+                        $response = $client->sms()->send(
+                            new \Vonage\SMS\Message\SMS($vonage_user_tel, 'Actual currency', $rates)
+                        );
                     }
-                    if ($rates === 5.0368) {
-                        \Log::info('Is equal to 5.0368');
-                    } else {
-                        \Log::info($rates);
-                    }
-
-                $basic  = new \Vonage\Client\Credentials\Basic($vonage_user_id, $vonage_usser_secret_key);
-                $client = new \Vonage\Client($basic);
-                $response = $client->sms()->send(
-                    new \Vonage\SMS\Message\SMS($vonage_user_tel, 'Currency', $rates)
-                );
-
-                $message = $response->current();
-
-                if ($message->getStatus() == 0) {
-                    \Log::info("Cron is working fine!");
-                } else {
-                    \Log::info("Cron is working fine!", $message->getStatus());
-                }
 
             } else {
                 \Log::info("ERROR HERE!");
