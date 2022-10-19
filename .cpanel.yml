@@ -1,0 +1,6 @@
+---
+deployment:
+  tasks:
+    - export DEPLOYPATH=/home/p565661/cronjob/
+    - /bin/cp -R public $DEPLOYPATH
+  run: 'composer install --dev'
