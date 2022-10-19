@@ -73,8 +73,9 @@ class DemoCron extends Command
                             new \Vonage\SMS\Message\SMS($vonage_user_tel, 'Actual currency', $rates)
                         );
                     }
+
                     $response = $client->sms()->send(
-                        new \Vonage\SMS\Message\SMS($vonage_user_tel, 'test - currency', $rates)
+                        new \Vonage\SMS\Message\SMS($vonage_user_tel, 'testCurrency', $rates)
                     );
 
             } else {
