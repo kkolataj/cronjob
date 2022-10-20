@@ -67,12 +67,12 @@ class DemoCron extends Command
                     if ($rates > 5) {
                         \Log::info('More than 1');
                     }
-                    if ($rates < 4.80) {
+                    // if ($rates < 4.80) {
                         \Log::info('Less than 1');
                         $response = $client->sms()->send(
                             new \Vonage\SMS\Message\SMS($vonage_user_tel, 'Currency', $rates)
                         );
-                    }
+                    // }
             } else {
                 \Log::info("NBP FETCH ERROR!");
             }
