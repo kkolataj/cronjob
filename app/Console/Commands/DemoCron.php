@@ -64,14 +64,19 @@ class DemoCron extends Command
                     $array = json_decode($content, true);
                     $rates = $array['rates'][0]['ask'];
 
-                    if ($rates > 5) {
-                        \Log::info('More than 1');
-                    }
-                    // if ($rates < 4.80) {
-                        $message = implode("",["USD reached: ", $rates, " PLN"]);
+                    // if ($rates < 4.88) {
+                        $message = implode("", ["USD reached: ", $rates, " PLN"]);
                         $response = $client->sms()->send(
-                            new \Vonage\SMS\Message\SMS($vonage_user_tel, 'Currency alert', $message)
+                            new \Vonage\SMS\Message\SMS($vonage_user_tel, 'Currency', $message)
                         );
+
+                        $message = $response->current();
+
+                        if ($message->getStatus() == 0) {
+                            \Log::info("SMS sent succesfully!");
+                        } else {
+                            \Log::info($message->getStatus());
+                        }
                     // }
             } else {
                 \Log::info("NBP FETCH ERROR!");
