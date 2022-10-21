@@ -3,7 +3,6 @@
 namespace App\Console\Commands;
 
 use Illuminate\Console\Command;
-use GuzzleHttp\Client;
 use Carbon\Carbon;
 
 class DemoCron extends Command
@@ -44,39 +43,64 @@ class DemoCron extends Command
             $vonage_user_id = \config('global-variables.vonage_user_id');
             $vonage_usser_secret_key = \config('global-variables.vonage_usser_secret_key');
             $vonage_user_tel = \config('global-variables.vonage_user_tel');
+            $api_layer_key = \config('global-variables.api_layer_key');
 
             if (!$dateNow->isWeekend()) {
-                // Guzzle fetch
-                $client = new Client(['verify' => false]);
-                $url = implode("", ['https://api.nbp.pl/api/exchangerates/rates/c/usd/', $dateNow->format('Y-m-d'), '/?format=json']);
-
-
                 \Log::info("_____________________________________________________________________");
-                \Log::info($url);
+                $curl = curl_init();
 
-                $res = $client->request('GET', $url);
+                curl_setopt_array($curl, array(
+                  CURLOPT_URL => "https://api.apilayer.com/exchangerates_data/latest?symbols=PLN&base=USD",
+                  CURLOPT_HTTPHEADER => array(
+                    "Content-Type: text/plain",
+                    "apikey: $api_layer_key"
+                  ),
+                  CURLOPT_RETURNTRANSFER => true,
+                  CURLOPT_ENCODING => "",
+                  CURLOPT_MAXREDIRS => 10,
+                  CURLOPT_TIMEOUT => 0,
+                  CURLOPT_FOLLOWLOCATION => true,
+                  CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
+                  CURLOPT_CUSTOMREQUEST => "GET"
+                ));
 
+                $response = curl_exec($curl);
+                $httpcode = curl_getinfo($curl, CURLINFO_HTTP_CODE);
+                curl_close($curl);
+
+                //SMS API
                 $basic  = new \Vonage\Client\Credentials\Basic($vonage_user_id, $vonage_usser_secret_key);
                 $client = new \Vonage\Client($basic);
 
-                if ($res->getStatusCode() == 200) {
-                    $content = $res->getBody()->getContents();
-                    $array = json_decode($content, true);
-                    $rates = $array['rates'][0]['ask'];
+                if ($httpcode == 200) {
+                    $array = json_decode($response, true);
+                    $rates = $array['rates']['PLN'];
 
-                    if ($rates < 4.84) {
+                    if ($rates < 4.86) {
                         $message = implode("", ["USD reached: ", $rates, " PLN"]);
-                        $response = $client->sms()->send(
+                        $msg_response = $client->sms()->send(
                             new \Vonage\SMS\Message\SMS($vonage_user_tel, 'Currency', $message)
                         );
 
-                        $message = $response->current();
+                        $message = $msg_response->current();
 
                         if ($message->getStatus() == 0) {
                             \Log::info("SMS sent succesfully!");
                         } else {
                             \Log::info($message->getStatus());
                         }
+                    }
+                    $message = implode("", ["USD reached: ", $rates, " PLN"]);
+                    $response = $client->sms()->send(
+                        new \Vonage\SMS\Message\SMS($vonage_user_tel, 'Currency', $message)
+                    );
+
+                    $message = $response->current();
+
+                    if ($message->getStatus() == 0) {
+                        \Log::info("SMS sent succesfully!");
+                    } else {
+                        \Log::info($message->getStatus());
                     }
             } else {
                 \Log::info("NBP FETCH ERROR!");
