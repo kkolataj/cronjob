@@ -76,7 +76,7 @@ class DemoCron extends Command
                     $array = json_decode($response, true);
                     $rates = $array['rates']['PLN'];
 
-                    if ($rates < 4.84) {
+                    if ($rates > 4.84) {
                         $message = implode("", ["USD reached: ", $rates, " PLN"]);
                         $msg_response = $client->sms()->send(
                             new \Vonage\SMS\Message\SMS($vonage_user_tel, 'Currency', $message)
