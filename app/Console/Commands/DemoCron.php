@@ -45,7 +45,7 @@ class DemoCron extends Command
             $vonage_user_tel = \config('global-variables.vonage_user_tel');
             $api_layer_key = \config('global-variables.api_layer_key');
 
-            // if (!$dateNow->isWeekend()) {
+            if (!$dateNow->isWeekend()) {
                 \Log::info("_____________________________________________________________________");
                 $curl = curl_init();
 
@@ -76,7 +76,7 @@ class DemoCron extends Command
                     $array = json_decode($response, true);
                     $rates = $array['rates']['PLN'];
 
-                    if ($rates > 4.84) {
+                    if ($rates < 4.84) {
                         $message = implode("", ["USD reached: ", $rates, " PLN"]);
                         $msg_response = $client->sms()->send(
                             new \Vonage\SMS\Message\SMS($vonage_user_tel, 'Currency', $message)
@@ -93,7 +93,7 @@ class DemoCron extends Command
             } else {
                 \Log::info("CURRENCY FETCH ERROR!");
             }
-        // }
+        }
 
         \Log::info("Cron is working fine!");
 
