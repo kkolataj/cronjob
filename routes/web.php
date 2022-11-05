@@ -2,6 +2,7 @@
 
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\BookController;
+use App\Http\Controllers\ConfigController;
 
 /*
 |--------------------------------------------------------------------------
@@ -20,6 +21,10 @@ Route::group(['namespace' => 'App\Http\Controllers'], function()
      * Home Routes
      */
     Route::get('/', 'HomeController@index')->name('home.index');
+
+    Route::post('/', 'HomeController@store')->name('home.store');
+
+    Route::put('/', 'HomeController@update')->name('home.update');
 
     Route::group(['middleware' => ['guest']], function() {
         /**
