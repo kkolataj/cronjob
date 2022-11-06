@@ -20332,16 +20332,16 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _mdi_font_css_materialdesignicons_css__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @mdi/font/css/materialdesignicons.css */ "./node_modules/@mdi/font/css/materialdesignicons.css");
 /* harmony import */ var vuetify_lib_styles_main_sass__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! vuetify/lib/styles/main.sass */ "./node_modules/vuetify/lib/styles/main.sass");
 /* harmony import */ var vuetify__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! vuetify */ "./node_modules/vuetify/lib/framework.mjs");
-/* harmony import */ var vuetify_lib_components__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! vuetify/lib/components */ "./node_modules/vuetify/lib/components/index.mjs");
-/* harmony import */ var vuetify_lib_directives__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! vuetify/lib/directives */ "./node_modules/vuetify/lib/directives/index.mjs");
+/* harmony import */ var vuetify_lib_components_index_mjs__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! vuetify/lib/components/index.mjs */ "./node_modules/vuetify/lib/components/index.mjs");
+/* harmony import */ var vuetify_lib_directives_index_mjs__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! vuetify/lib/directives/index.mjs */ "./node_modules/vuetify/lib/directives/index.mjs");
 
 
 
 
 
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ((0,vuetify__WEBPACK_IMPORTED_MODULE_2__.createVuetify)({
-  components: vuetify_lib_components__WEBPACK_IMPORTED_MODULE_3__,
-  directives: vuetify_lib_directives__WEBPACK_IMPORTED_MODULE_4__
+  components: vuetify_lib_components_index_mjs__WEBPACK_IMPORTED_MODULE_3__,
+  directives: vuetify_lib_directives_index_mjs__WEBPACK_IMPORTED_MODULE_4__
 }));
 
 /***/ }),

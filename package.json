@@ -2,7 +2,8 @@
   "private": true,
   "scripts": {
     "dev": "mix",
-    "watch": "mix watch"
+    "watch": "mix watch",
+    "build": "vite build"
   },
   "dependencies": {
     "@mdi/font": "5.9.55",
