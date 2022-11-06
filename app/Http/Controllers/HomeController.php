@@ -9,14 +9,15 @@ class HomeController extends Controller
 {
     public function index()
     {
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    $user_settings = UserSettings::all();
-    return view('home.index',compact('user_settings'))
-        ->with('i', (request()->input('page', 1) - 1) * 5);
+        /**
+         * Display a listing of the resource.
+         *
+         * @return \Illuminate\Http\Response
+         */
+        $user_settings = UserSettings::first();
+        // return view('home.index',compact('user_settings'))
+        //     ->with('i', (request()->input('page', 1) - 1) * 5);
+        return $user_settings;
     }
 
     /**
@@ -36,9 +37,8 @@ class HomeController extends Controller
     public function update(Request $request)
     {
         $values = $request->all();
-
+        \Log::info($request);
         if($request->hasActiveNotifications != "on"){
-            \Log::info($request);
             $values = array(
                 'id' => $request->id,
                 'hasActiveNotifications' => ""
@@ -50,8 +50,8 @@ class HomeController extends Controller
         // ]);
         UserSettings::findOrFail($request->id)->update($values);
 
-        return redirect()->route('home.index')
-                        ->with('success','Book updated successfully');
+        // return redirect()->route('home.index')
+        //                 ->with('success','Book updated successfully');
     }
 
 }

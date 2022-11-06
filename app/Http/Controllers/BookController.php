@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Book;
+use App\UserSettings;
 use Illuminate\Http\Request;
 
 
@@ -69,15 +70,15 @@ class BookController extends Controller
     /**
      * Display the specified resource by ID.
      *
-     * @param  \App\Book  $book
+     * @param  \App\UserSettings  $userSettings
      * @return \Illuminate\Http\Response
      */
-    public function showItemById($name)
+    public function showItemById($userId)
     {
-        // $books = Book::get(['name'])->pluck('name'); // fajnie wyciąga wartosc wszystkich elementow wedlug nazwy wlasciwosci
-        $books = Book::where('name', '=', $name)->first();
-        // \Log::info($books);
-        return $books;
+        // $books = UserSettings::get(['name'])->pluck('name'); // fajnie wyciąga wartosc wszystkich elementow wedlug nazwy wlasciwosci
+        $userSettings = UserSettings::where('_id', '=', $userId)->first();
+        // \Log::info($userSettings);
+        return $userSettings;
     }
 
 
@@ -97,22 +98,18 @@ class BookController extends Controller
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Book  $book
+     * @param  \App\UserSettings  $userSettings
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Book $book)
+    public function update(Request $request)
     {
-         request()->validate([
-            'name' => 'required',
-            'detail' => 'required',
-        ]);
+        $values = $request->all();
+        \Log::info($values);
 
-
-        $book->update($request->all());
-
-
-        return redirect()->route('books.index')
-                        ->with('success','Book updated successfully');
+        //  request()->validate([
+        //     'hasActiveNotifications' => 'required'
+        // ]);
+        UserSettings::findOrFail($request->id)->update($values);
     }
     /**
      * Remove the specified resource from storage.
