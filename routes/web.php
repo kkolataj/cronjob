@@ -13,9 +13,13 @@ use App\Http\Controllers\BookController;
 | contains the "web" middleware group. Now create something great!
 |
 */
+Route::group(['middleware' => 'cors'], function () {
 
-Route::get('/', function () {
-    return view('welcome');
+    Route::get('/', function () {
+        return view('welcome');
+    });
+
+    Route::get('books/{id}', [BookController::class, 'showItemById']);
+
 });
 
-Route::get('books/{id}', [BookController::class, 'showItemById']);
