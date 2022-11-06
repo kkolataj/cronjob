@@ -81,6 +81,34 @@ class BookController extends Controller
         return $userSettings;
     }
 
+    public function getLatestRate($currency)
+    {
+        $api_layer_key = \config('global-variables.api_layer_key');
+        $curl = curl_init();
+        // \Log::info($api_layer_key);
+        $url = implode("", ["https://api.apilayer.com/exchangerates_data/latest?symbols=PLN&base=", $currency] );
+        curl_setopt_array($curl, array(
+          CURLOPT_URL => $url,
+          CURLOPT_HTTPHEADER => array(
+            "Content-Type: text/plain",
+            "apikey: $api_layer_key"
+          ),
+          CURLOPT_RETURNTRANSFER => true,
+          CURLOPT_ENCODING => "",
+          CURLOPT_MAXREDIRS => 10,
+          CURLOPT_TIMEOUT => 0,
+          CURLOPT_FOLLOWLOCATION => true,
+          CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
+          CURLOPT_CUSTOMREQUEST => "GET"
+        ));
+
+        $response = curl_exec($curl);
+        $httpcode = curl_getinfo($curl, CURLINFO_HTTP_CODE);
+        curl_close($curl);
+        $array = json_decode($response, true);
+        $rates = $array['rates']['PLN'];
+        return $rates;
+    }
 
     /**
      * Show the form for editing the specified resource.
