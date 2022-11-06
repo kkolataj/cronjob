@@ -4,7 +4,7 @@
             <h1>Vue component</h1>
             <p>Currency test {{new Date().toDateString()}}</p>
             <h4>Items: {{item}}</h4>
-            <button type="button" class="button" @click="onClick">Click</button>
+            <button type="button" class="button" @click="onClick">Fetch data</button>
         </div>
     </main>
 </template>

@@ -38,7 +38,7 @@
             <tr>
                 <td>{{ ++$i }}</td>
                 <td>{{ $setting->id }}</td>
-                <td>{{ $setting->hasActiveNotifications }}</td>
+                <td>@if($setting->hasActiveNotifications) Yes @else No @endif</td>
                 <td>
                     {{-- <form>
                         <a class="btn btn-primary" href="{{ route('home.index',$setting->id) }}">Edit</a>
