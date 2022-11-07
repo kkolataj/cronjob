@@ -1,3 +1,4 @@
+import './bootstrap';
 import { createApp } from 'vue'
 import vuetify from './plugins/vuetify'
 import App from './components/App.vue'
