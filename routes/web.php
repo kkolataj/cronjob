@@ -15,11 +15,11 @@ use App\Http\Controllers\ConfigController;
 |
 */
 
-// Route::post('user-settings', [BookController::class, 'update']);
+Route::post('user-settings', [BookController::class, 'update']);
 
-// Route::get('/user-settings/{id}', [BookController::class, 'showItemById']);
+Route::get('/user-settings/{id}', [BookController::class, 'showItemById']);
 
-// Route::get('/user-settings/latest-rate/{currency}', [BookController::class, 'getLatestRate']);
+Route::get('/user-settings/latest-rate/{currency}', [BookController::class, 'getLatestRate']);
 
 // Route::get('/', function () {
 //     return view('vue');
