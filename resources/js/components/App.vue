@@ -120,7 +120,7 @@ export default ({
         const checkLastestRate = async() => {
             isPending.value.latestCurrency = true;
             try{
-                const response = await axios.get(`http://127.0.0.1:8000/user-settings/latest-rate/${latestCurrency.value}`);
+                const response = await axios.get(`/user-settings/latest-rate/${latestCurrency.value}`);
                 latestExchangeRate.value = response.data;
                 isPending.value.latestCurrency = false;
                 snackbar.value = true;
@@ -132,7 +132,7 @@ export default ({
         const calculateExchangeRate = async(isCalculating) => {
             isPending.value.selectedCurrencyToCalculate = true;
             try{
-                const response = await axios.get(`http://127.0.0.1:8000/user-settings/latest-rate/${selectedCurrencyToCalculate.value}`);
+                const response = await axios.get(`/user-settings/latest-rate/${selectedCurrencyToCalculate.value}`);
                 latestExchangeRate.value = response.data;
                 isPending.value.selectedCurrencyToCalculate = false;
             }catch(error){
@@ -140,7 +140,7 @@ export default ({
             }
         }
 
-        axios.get(`http://127.0.0.1:8000/user-settings/636182a08392e0cb9f08b2b7`)
+        axios.get(`/user-settings/636182a08392e0cb9f08b2b7`)
         .then(response => {
             item.value = response.data;
             isFetched.value = true;
