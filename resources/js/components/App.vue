@@ -107,7 +107,7 @@ export default ({
         const onChange = async() => {
             isPending.value.hasActiveNotifications = true;
             try{
-                await axios.post(`http://127.0.0.1:8000/user-settings`, {
+                await axios.post(`http://207.154.235.45/user-settings`, {
                 hasActiveNotifications: Number(hasActiveNotifications.value),
                 id: '636182a08392e0cb9f08b2b7'
             });
@@ -120,7 +120,7 @@ export default ({
         const checkLastestRate = async() => {
             isPending.value.latestCurrency = true;
             try{
-                const response = await axios.get(`/user-settings/latest-rate/${latestCurrency.value}`);
+                const response = await axios.get(`http://207.154.235.45/user-settings/latest-rate/${latestCurrency.value}`);
                 latestExchangeRate.value = response.data;
                 isPending.value.latestCurrency = false;
                 snackbar.value = true;
@@ -132,7 +132,7 @@ export default ({
         const calculateExchangeRate = async(isCalculating) => {
             isPending.value.selectedCurrencyToCalculate = true;
             try{
-                const response = await axios.get(`/user-settings/latest-rate/${selectedCurrencyToCalculate.value}`);
+                const response = await axios.get(`http://207.154.235.45/user-settings/latest-rate/${selectedCurrencyToCalculate.value}`);
                 latestExchangeRate.value = response.data;
                 isPending.value.selectedCurrencyToCalculate = false;
             }catch(error){
